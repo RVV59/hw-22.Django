@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+import psycopg2
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hrde2(xksm8j67!p%2q73ecl3@*^o#-5zyycnb8kj&%vbpsm!l'
+SECRET_KEY ='SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,8 +78,8 @@ WSGI_APPLICATION = 'hw_22.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hw-23',
+        'ENGINE': '',
+        'NAME': '',
         'USER': 'USER',
         'PASSWORD': 'PASSWORD',
         'HOST': 'localhost',
@@ -84,7 +87,27 @@ DATABASES = {
     }
 }
 
+load_dotenv()
 
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+
+DATABASES = {
+    'default': {
+        'client_encoding': 'utf8',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
+    }
+}
+
+print("USER:", os.getenv("USER"))
+print("PASSWORD:", os.getenv("PASSWORD"))
+print("NAME:", os.getenv("NAME"))
+print("HOST:", os.getenv("HOST"))
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
