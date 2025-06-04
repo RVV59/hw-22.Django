@@ -73,24 +73,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'hw_22.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': '',
-#         'NAME': '',
-#         'USER': 'USER',
-#         'PASSWORD': 'PASSWORD',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'client_encoding': 'utf8',
-#         },
-#     }
-# }
-
-
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
@@ -110,13 +92,6 @@ DATABASES = {
     }
 }
 
-print("USER:", os.getenv("USER"))
-print("PASSWORD:", os.getenv("PASSWORD"))
-print("NAME:", os.getenv("NAME"))
-print("HOST:", os.getenv("HOST"))
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -132,6 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Медиатека (Media)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
