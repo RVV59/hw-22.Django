@@ -14,7 +14,7 @@ from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
 
-
+load_dotenv(encoding='utf-8-sig')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -76,18 +76,21 @@ WSGI_APPLICATION = 'hw_22.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': '',
-        'NAME': '',
-        'USER': 'USER',
-        'PASSWORD': 'PASSWORD',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': '',
+#         'NAME': '',
+#         'USER': 'USER',
+#         'PASSWORD': 'PASSWORD',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'client_encoding': 'utf8',
+#         },
+#     }
+# }
 
-load_dotenv()
+
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
@@ -101,6 +104,9 @@ DATABASES = {
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
         'PORT': os.getenv('PORT'),
+        'OPTIONS': {
+            'client_encoding': 'utf8',
+        },
     }
 }
 
