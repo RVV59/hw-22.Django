@@ -1,0 +1,41 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Ноутбук",
+        "description": null,
+        "image": "",
+        "category": 1,
+        "price": "54999.99",
+        "created_at": "2025-06-04T05:56:34.442Z",
+        "updated_at": "2025-06-04T06:08:25.959Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Умные часы",
+        "description": null,
+        "image": "",
+        "category": 1,
+        "price": "9999.99",
+        "created_at": "2025-06-04T05:56:55.316Z",
+        "updated_at": "2025-06-04T05:56:55.316Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Роман 'Война и мир'",
+        "description": null,
+        "image": "",
+        "category": 2,
+        "price": "1200.00",
+        "created_at": "2025-06-04T05:57:33.132Z",
+        "updated_at": "2025-06-04T05:57:33.133Z"
+    }
+}
+]
