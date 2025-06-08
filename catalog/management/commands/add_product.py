@@ -3,6 +3,7 @@ from django.core.management import call_command
 from catalog.models import Product
 
 
+
 class Command(BaseCommand):
     help = 'Load test data from fixture'
 
