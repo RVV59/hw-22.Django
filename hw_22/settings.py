@@ -34,6 +34,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'blog',
     'catalog',
     'django.contrib.admin',
     'django.contrib.auth',
