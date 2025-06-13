@@ -14,7 +14,9 @@ from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
 
-load_dotenv(encoding='utf-8-sig')
+
+
+load_dotenv(encoding='utf-8')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -138,3 +140,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Медиатека (Media)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
