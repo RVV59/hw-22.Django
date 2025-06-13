@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} | Skystore{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ post.title }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if post.preview %}
+                        <img src="{{ post.preview.url }}" alt="{{ post.title }}" class="img-fluid mb-3">
+                    {% endif %}
+                    <p>{{ post.content }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
