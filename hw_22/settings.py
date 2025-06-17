@@ -18,11 +18,11 @@ from dotenv import load_dotenv
 load_dotenv(encoding='utf-8-sig')
 # load_dotenv(encoding='utf-8')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -84,8 +84,8 @@ DEBUG = os.getenv('DEBUG') == 'True'
 DATABASES = {
     'default': {
         'client_encoding': 'utf8',
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('NAME'),
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
