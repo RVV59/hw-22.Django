@@ -14,12 +14,15 @@ from pathlib import Path
 import psycopg2
 from dotenv import load_dotenv
 
+
 load_dotenv(encoding='utf-8-sig')
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# load_dotenv(encoding='utf-8')
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -34,6 +37,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'blog',
     'catalog',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,6 +84,7 @@ DEBUG = os.getenv('DEBUG') == 'True'
 DATABASES = {
     'default': {
         'client_encoding': 'utf8',
+        # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('NAME'),
         'USER': os.getenv('USER'),
@@ -126,9 +131,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR / 'static'),  # путь к твоим статическим файлам
+    os.path.join(BASE_DIR / 'static'),
 ]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -137,3 +141,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Медиатека (Media)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
