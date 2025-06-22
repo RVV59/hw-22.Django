@@ -5,16 +5,18 @@ class Command(BaseCommand):
     help = 'Добавляет тестовые данные: категории и товары'
 
     def handle(self, *args, **kwargs):
-        self.stdout.write("Очистка существующих данных...")
+        self.stdout.write("Очистка старых данных...")
+
+        # Очистка
         Product.objects.all().delete()
         Category.objects.all().delete()
 
-        # Создаем категории
+        # Добавление категорий
         category_electronics = Category.objects.create(name="Электроника")
         category_books = Category.objects.create(name="Книги")
         category_clothing = Category.objects.create(name="Одежда")
 
-        # Создаем товары
+        # Добавление товаров
         Product.objects.create(
             name="Смартфон",
             description="Современный смартфон с отличной камерой",
@@ -40,4 +42,4 @@ class Command(BaseCommand):
             category=category_clothing
         )
 
-        self.stdout.write(self.style.SUCCESS('Тестовые данные успешно добавлены!'))
+        self.stdout.write(self.style.SUCCESS('✅ Товары успешно добавлены!'))
