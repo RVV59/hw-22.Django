@@ -13,7 +13,7 @@ class BlogPostListView(ListView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
-    template_name = 'blog/post_detail.html'
+    template_name = 'blog/post_details.html'
     context_object_name = 'post'
 
     def get_object(self, queryset=None):
@@ -41,5 +41,6 @@ class BlogPostUpdateView(UpdateView):
 
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
+    context_object_name = 'post'
     template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('blog:post_list')

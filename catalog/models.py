@@ -37,8 +37,12 @@ class Product(models.Model):
         auto_now=True,
         verbose_name="Дата последнего изменения"
     )
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name="Признак публикации")
 
     class Meta:
+        db_table = 'Product'
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
 
@@ -57,6 +61,7 @@ class Category(models.Model):
     )
 
     class Meta:
+        db_table = 'Category'
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
