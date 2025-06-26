@@ -24,10 +24,6 @@ class HomeView(ListView):
         return context
 
 
-class ContactsView(DetailView):
-    model = Product
-    template_name = 'contacts.html'
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'

@@ -20,13 +20,13 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'catalog:home' %}">Главная</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'catalog:product_create' %}">Добавить товар</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'blog:post_list' %}">Блог</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'catalog:contacts' %}">Контакты</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    {% include "menu.html" %}
     {% block content %}
     {% endblock %}
 </div>
