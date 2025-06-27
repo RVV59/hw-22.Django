@@ -14,7 +14,8 @@ dependencies = [
     "pillow (>=11.2.1,<12.0.0)",
     "psycopg2-binary (>=2.9.10,<3.0.0)",
     "python-dotenv (>=1.1.0,<2.0.0)",
-    "ipython (>=9.3.0,<10.0.0)"
+    "ipython (>=9.3.0,<10.0.0)",
+    "flask (>=3.1.1,<4.0.0)"
 ]
 
 [tool.poetry]
@@ -24,3 +25,4 @@ packages = [{include = "hw_22"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
