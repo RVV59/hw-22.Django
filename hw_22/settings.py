@@ -33,10 +33,11 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
+AUTH_USER_MODEL = 'users.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'blog',
     'catalog',
     'django.contrib.admin',
