@@ -33,10 +33,11 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
+AUTH_USER_MODEL = 'users.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'blog',
     'catalog',
     'django.contrib.admin',
@@ -140,7 +141,7 @@ STATICFILES_DIRS = [
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
+DEFAULT_FROM_EMAIL = 'grdn@bk.ru'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Медиатека (Media)
@@ -165,3 +166,16 @@ LOGGING = {
         },
     },
 }
+
+# Настройки аутентификации
+LOGIN_REDIRECT_URL = 'catalog:home'
+LOGOUT_REDIRECT_URL = 'catalog:home'
+
+# Настройки почты (пример для Mail.ru)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
