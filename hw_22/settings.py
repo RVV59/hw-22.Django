@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-import psycopg2
 from dotenv import load_dotenv
 
 
@@ -21,20 +20,12 @@ load_dotenv(encoding='utf-8-sig')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY ='SECRET_KEY'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'users.CustomUser'
-# Application definition
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
@@ -87,13 +78,9 @@ DEBUG = os.getenv('DEBUG') == 'True'
 DATABASES = {
     'default': {
         'client_encoding': 'utf8',
-        # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'hw_23',
         'NAME': os.getenv('NAME'),
-        # 'USER': 'hw_23_user',
         'USER': os.getenv('USER'),
-        # 'PASSWORD': 'user12345',
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
         'PORT': os.getenv('PORT'),
@@ -120,8 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -132,15 +117,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR / 'static'),
 ]
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 DEFAULT_FROM_EMAIL = 'grdn@bk.ru'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -174,8 +155,9 @@ LOGOUT_REDIRECT_URL = 'catalog:home'
 # Настройки почты (пример для Mail.ru)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
