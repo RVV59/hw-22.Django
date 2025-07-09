@@ -19,6 +19,27 @@
                     <h5>Цена: ${{ product.price }}</h5>
                     <a href="/" class="btn btn-secondary mt-3">Назад к каталогу</a>
                 </div>
+                {% if user.is_authenticated %}
+                    <div class="card-footer">
+
+                        <!-- Кнопка "Редактировать" (только для владельца) -->
+                        {% if object.owner == user or user.is_superuser %}
+                            <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-primary">Редактировать</a>
+                        {% endif %}
+
+                        <!-- Кнопка "Удалить" (для владельца ИЛИ модератора) -->
+                        {% if object.owner == user or user.has_perm('catalog.delete_product') or user.is_superuser %}
+                            <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+                        {% endif %}
+
+                        <!-- Кнопка "Отменить публикацию" (только для модератора) -->
+                        {% if user.has_perm('catalog.can_unpublish_product') or user.is_superuser %}
+                            <!-- Здесь может быть ссылка на view, который меняет статус -->
+                            <a href="#" class="btn btn-warning">Отменить публикацию</a>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

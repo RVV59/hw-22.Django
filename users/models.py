@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name='Email')
     avatar = models.ImageField(upload_to='users/', blank=True, null=True, verbose_name='Аватар')
-    phone = models.CharField(max_length=20, blank=True, verbose_name='Телефон')
+    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name='Телефон')
     country = models.CharField(max_length=100, blank=True, verbose_name='Страна')
 
     USERNAME_FIELD = 'email'
