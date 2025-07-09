@@ -73,6 +73,7 @@ class Product(models.Model):
 class Category(models.Model):
     name = models.CharField(
         max_length=100,
+        unique=True,
         verbose_name="Наименование"
     )
     description = models.TextField(

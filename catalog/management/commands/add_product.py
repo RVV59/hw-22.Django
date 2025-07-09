@@ -43,84 +43,163 @@
 #         )
 #
 #         self.stdout.write(self.style.SUCCESS('✅ Товары успешно добавлены!'))
+# from django.core.management.base import BaseCommand
+# from catalog.models import Category, Product
+#
+#
+# class Command(BaseCommand):
+#     help = 'Добавляет тестовые данные: категории и товары'
+#
+#     def add_arguments(self, parser):
+#         parser.add_argument(
+#             '--clear',
+#             action='store_true',
+#             help='Очистить все существующие данные перед добавлением'
+#         )
+#
+#     def handle(self, *args, **options):
+#         # Очистка данных (опционально)
+#         if options['clear']:
+#             self.stdout.write("Очистка старых данных...")
+#             Product.objects.all().delete()
+#             Category.objects.all().delete()
+#
+#         # Создаем категории с проверкой на существование
+#         categories_data = [
+#             {"name": "Электроника"},
+#             {"name": "Книги"},
+#             {"name": "Одежда"}
+#         ]
+#
+#         created_categories = []
+#         for cat_data in categories_data:
+#             category, created = Category.objects.get_or_create(**cat_data)
+#             if created:
+#                 created_categories.append(category.name)
+#
+#         if created_categories:
+#             self.stdout.write(f"Созданы категории: {', '.join(created_categories)}")
+#         else:
+#             self.stdout.write("Все категории уже существуют")
+#
+#         # Добавляем товары
+#         products_data = [
+#             {
+#                 "name": "Смартфон",
+#                 "description": "Современный смартфон с отличной камерой",
+#                 "price": 499.99,
+#                 "category": Category.objects.get(name="Электроника")
+#             },
+#             {
+#                 "name": "Ноутбук",
+#                 "description": "Мощный ноутбук для работы и игр",
+#                 "price": 1299.99,
+#                 "category": Category.objects.get(name="Электроника")
+#             },
+#             {
+#                 "name": "Роман 'Преступление и наказание'",
+#                 "description": "Классический роман Ф. М. Достоевского",
+#                 "price": 19.99,
+#                 "category": Category.objects.get(name="Книги")
+#             },
+#             {
+#                 "name": "Футболка",
+#                 "description": "Хлопковая футболка прямого кроя",
+#                 "price": 14.99,
+#                 "category": Category.objects.get(name="Одежда")
+#             }
+#         ]
+#
+#         created_count = 0
+#         for prod_data in products_data:
+#             _, created = Product.objects.get_or_create(
+#                 name=prod_data['name'],
+#                 defaults=prod_data
+#             )
+#             if created:
+#                 created_count += 1
+#
+#         self.stdout.write(
+#             self.style.SUCCESS(
+#                 f'✅ Успешно добавлено {created_count} новых товаров!'
+#             )
+#         )
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
-    help = 'Добавляет тестовые данные: категории и товары'
+    help = 'Заполняет базу данных тестовыми категориями и товарами'
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--clear',
             action='store_true',
-            help='Очистить все существующие данные перед добавлением'
+            help='Очистить все существующие товары и категории перед заполнением'
         )
 
+    @transaction.atomic
     def handle(self, *args, **options):
-        # Очистка данных (опционально)
         if options['clear']:
             self.stdout.write("Очистка старых данных...")
             Product.objects.all().delete()
             Category.objects.all().delete()
+            self.stdout.write(self.style.SUCCESS("Данные очищены."))
 
-        # Создаем категории с проверкой на существование
-        categories_data = [
-            {"name": "Электроника"},
-            {"name": "Книги"},
-            {"name": "Одежда"}
-        ]
+        self.stdout.write("Создание категорий...")
 
-        created_categories = []
-        for cat_data in categories_data:
-            category, created = Category.objects.get_or_create(**cat_data)
+        # 1. Создаем категории и сохраняем их объекты в словарь для быстрого доступа
+        categories_to_create = ["Электроника", "Книги", "Одежда"]
+        categories = {}
+        for cat_name in categories_to_create:
+            category, created = Category.objects.get_or_create(name=cat_name)
+            categories[cat_name] = category  # Сохраняем объект, а не только имя
             if created:
-                created_categories.append(category.name)
+                self.stdout.write(f'  - Категория "{cat_name}" создана.')
 
-        if created_categories:
-            self.stdout.write(f"Созданы категории: {', '.join(created_categories)}")
-        else:
-            self.stdout.write("Все категории уже существуют")
+        self.stdout.write("Создание товаров...")
 
-        # Добавляем товары
+        # 2. Определяем данные для товаров
         products_data = [
             {
-                "name": "Смартфон",
-                "description": "Современный смартфон с отличной камерой",
-                "price": 499.99,
-                "category": Category.objects.get(name="Электроника")
+                "name": "Смартфон", "description": "Современный смартфон с отличной камерой",
+                "price": 499.99, "category_name": "Электроника"
             },
             {
-                "name": "Ноутбук",
-                "description": "Мощный ноутбук для работы и игр",
-                "price": 1299.99,
-                "category": Category.objects.get(name="Электроника")
+                "name": "Ноутбук", "description": "Мощный ноутбук для работы и игр",
+                "price": 1299.99, "category_name": "Электроника"
             },
             {
-                "name": "Роман 'Преступление и наказание'",
-                "description": "Классический роман Ф. М. Достоевского",
-                "price": 19.99,
-                "category": Category.objects.get(name="Книги")
+                "name": "Роман 'Преступление и наказание'", "description": "Классический роман Ф. М. Достоевского",
+                "price": 19.99, "category_name": "Книги"
             },
             {
-                "name": "Футболка",
-                "description": "Хлопковая футболка прямого кроя",
-                "price": 14.99,
-                "category": Category.objects.get(name="Одежда")
+                "name": "Футболка", "description": "Хлопковая футболка прямого кроя",
+                "price": 14.99, "category_name": "Одежда"
             }
         ]
 
         created_count = 0
+        # 3. Создаем товары, используя объекты категорий из нашего словаря
         for prod_data in products_data:
-            _, created = Product.objects.get_or_create(
+            category_name = prod_data.pop('category_name')
+            category_obj = categories[category_name]
+
+            # Используем defaults, чтобы обновлять данные, если товар уже существует
+            product, created = Product.objects.get_or_create(
                 name=prod_data['name'],
+                category=category_obj,
                 defaults=prod_data
             )
             if created:
                 created_count += 1
 
+        if created_count > 0:
+            self.stdout.write(f'  - Добавлено {created_count} новых товаров.')
+
         self.stdout.write(
             self.style.SUCCESS(
-                f'✅ Успешно добавлено {created_count} новых товаров!'
+                '✅ Заполнение базы данных успешно завершено!'
             )
         )
