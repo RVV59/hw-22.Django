@@ -50,13 +50,13 @@ class Product(models.Model):
     )
 
     # 2. Добавляем владельца продукта
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="Владелец"
-    )
+    # owner = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    #     verbose_name="Владелец"
+    # )
 
     class Meta:
         db_table = 'Product'

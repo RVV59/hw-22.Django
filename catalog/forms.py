@@ -42,4 +42,5 @@ class ProductForm(forms.ModelForm):
                 field.widget.attrs.update({'class': 'form-control'})
             else:
                 field.widget.attrs.update({'class': 'form-control', 'rows': 4})
-        self.fields['is_published'].widget.attrs.update({'class': 'form-check-input'})
+        # if 'is_published' in self.fields:
+        #     self.fields['is_published'].widget.attrs.update({'class': 'form-check-input'})

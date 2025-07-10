@@ -153,7 +153,7 @@ LOGIN_REDIRECT_URL = 'catalog:home'
 LOGOUT_REDIRECT_URL = 'catalog:home'
 
 # Настройки почты (пример для Mail.ru)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 2525
 EMAIL_USE_TLS = True
