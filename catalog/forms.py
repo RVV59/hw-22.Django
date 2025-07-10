@@ -15,7 +15,7 @@ def contains_forbidden_word(value):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('owner',)
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
