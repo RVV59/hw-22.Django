@@ -1,8 +1,7 @@
-
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from .models import Product
 from .forms import ProductForm
 
@@ -18,7 +17,7 @@ class HomeView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(publish_status='published')
-        # return Product.objects.filter(publish_status='published')
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -58,32 +57,17 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 class ProductUnpublishView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    """
-    Представление для отмены публикации продукта.
-    Не отображает шаблон, а выполняет действие и перенаправляет.
-    """
     model = Product
     # Мы не будем отображать шаблон, но DetailView требует его наличия
     template_name = 'product_detail.html'
 
     def test_func(self):
-        """
-        Проверяет, имеет ли пользователь право на отмену публикации.
-        Суперпользователи всегда имеют доступ.
-        """
         return self.request.user.has_perm('catalog.can_unpublish_product') or self.request.user.is_superuser
 
     def get(self, request, *args, **kwargs):
-        """
-        Переопределяем GET-запрос. Вместо отображения страницы,
-        мы меняем статус продукта и делаем редирект.
-        """
-        # Получаем объект продукта
+
         product = self.get_object()
 
-        # Меняем статус на "черновик"
         product.publish_status = 'draft'
         product.save()
-
-        # Возвращаем пользователя на главную страницу каталога
         return redirect('catalog:home')
