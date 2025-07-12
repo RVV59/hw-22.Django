@@ -15,7 +15,7 @@ def contains_forbidden_word(value):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('owner',)
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -42,4 +42,5 @@ class ProductForm(forms.ModelForm):
                 field.widget.attrs.update({'class': 'form-control'})
             else:
                 field.widget.attrs.update({'class': 'form-control', 'rows': 4})
-        self.fields['is_published'].widget.attrs.update({'class': 'form-check-input'})
+        # if 'is_published' in self.fields:
+        #     self.fields['is_published'].widget.attrs.update({'class': 'form-check-input'})
