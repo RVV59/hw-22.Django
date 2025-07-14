@@ -35,7 +35,7 @@
                         <!-- Кнопка "Отменить публикацию" (только для модератора) -->
                         {% if perms.catalog.can_unpublish_product or user.is_superuser %}
                             <!-- Здесь может быть ссылка на view, который меняет статус -->
-                            <a href="#" class="btn btn-warning">Отменить публикацию</a>
+                            <a href="{% url "catalog:product_unpublish" product.pk %}" class="btn btn-warning">Отменить публикацию</a>
                         {% endif %}
 
                     </div>

@@ -42,6 +42,8 @@
 - Django 5.2.1
 - Bootstrap (CDN)
 - Poetry (менеджер зависимостей)
+- PostgreSQL 17
+- Redis
 
 ## Структура проекта
 - `hw_22/` — основная директория проекта Django.
