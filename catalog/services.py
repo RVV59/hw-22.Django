@@ -1,4 +1,3 @@
-# hw-22.Django\catalog\services.py (новый файл)
 from django.core.cache import cache
 from .models import Product
 

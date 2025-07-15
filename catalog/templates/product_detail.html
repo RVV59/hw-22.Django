@@ -22,20 +22,16 @@
                 {% if user.is_authenticated %}
                     <div class="card-footer">
 
-                        <!-- Кнопка "Редактировать" (только для владельца) -->
                         {% if object.owner == user or user.is_superuser %}
                             <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-primary">Редактировать</a>
                         {% endif %}
 
-                        <!-- Кнопка "Удалить" (для владельца ИЛИ модератора) -->
-                        {% if object.owner == user or perms.catalog.delete_product or user.is_superuser %}
+                        {% if object.owner == user or perms.catalog.delete_product%}
                             <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
                         {% endif %}
 
-                        <!-- Кнопка "Отменить публикацию" (только для модератора) -->
-                        {% if perms.catalog.can_unpublish_product or user.is_superuser %}
-                            <!-- Здесь может быть ссылка на view, который меняет статус -->
-                            <a href="{% url "catalog:product_unpublish" product.pk %}" class="btn btn-warning">Отменить публикацию</a>
+                        {% if perms.catalog.can_unpublish_product%}
+                            <a href="{% url "catalog: product_unpublish" product.pk %}" class="btn btn-warning">Отменить публикацию</a>
                         {% endif %}
 
                     </div>

@@ -38,7 +38,7 @@ class HomeView(ListView):
 
         if not products:
             products = Product.objects.filter(publish_status='published').select_related('category')
-            cache.set(cache_key, products, 60 * 60)  # Кэшируем на 1 час
+            cache.set(cache_key, products, 60 * 60)
         return products
 
     def get_context_data(self, **kwargs):
@@ -86,7 +86,6 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class ProductUnpublishView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Product
-    # Мы не будем отображать шаблон, но DetailView требует его наличия
     template_name = 'product_detail.html'
 
     def test_func(self):
