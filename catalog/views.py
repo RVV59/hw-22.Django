@@ -83,7 +83,6 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         user = self.request.user
         return user == product.owner or user.has_perm('catalog.delete_product') or user.is_superuser
 
-
 class ProductUnpublishView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Product
     template_name = 'product_detail.html'
